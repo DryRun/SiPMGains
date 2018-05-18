@@ -1,0 +1,31 @@
+<library   file="*.cc" name="HcalTupleMaker_Plugins">
+  <use   name="FWCore/Framework"/>
+  <use   name="classlib"/>
+  <use   name="FWCore/PluginManager"/>
+  <use   name="FWCore/ParameterSet"/>
+  <use   name="CommonTools/UtilAlgos"/>
+  <use   name="HCALPFG/HcalTupleMaker"/>
+  <use   name="CalibFormats/HcalObjects"/>
+  <use   name="CalibCalorimetry/HcalAlgos"/>
+  <use   name="DataFormats/Common"/>
+  <use   name="DataFormats/EcalRecHit"/>
+  <use   name="DataFormats/HcalDetId"/>
+  <use   name="DataFormats/HcalDigi"/>
+  <use   name="DataFormats/HcalRecHit"/>
+  <use   name="DataFormats/FEDRawData"/>
+  <use   name="DataFormats/JetReco"/>
+  <use   name="DataFormats/METReco"/>
+  <use   name="Geometry/CaloGeometry"/>
+  <use   name="Geometry/CaloTopology"/>
+  <use   name="Geometry/Records"/>
+  <use   name="Geometry/HcalTowerAlgo"/>
+  <use   name="TrackingTools/TrackAssociator"/>
+  <use   name="RecoMET/METAlgorithms"/>
+  <use   name="boost"/>
+  <use   name="rootcore"/>
+  <use   name="root"/>
+  <use   name="rootspectrum"/>
+  <use   name="CLHEP"/>
+  <flags EDM_PLUGIN="1"/>
+</library>
+

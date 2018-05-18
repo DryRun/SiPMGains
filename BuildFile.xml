@@ -1,0 +1,20 @@
+<use   name="FWCore/Framework"/>
+<use   name="FWCore/PluginManager"/>
+<use   name="FWCore/ParameterSet"/>
+<use   name="classlib"/>
+<use   name="DataFormats/HcalDigi"/>
+<use   name="DataFormats/HcalRecHit"/>
+<use   name="HLTrigger/HLTcore"/>
+<use   name="CondFormats/HcalObjects"/>
+<use   name="Geometry/HcalTowerAlgo"/>
+<use   name="Geometry/Records"/>
+<use   name="RecoLocalCalo/HcalRecAlgos"/>
+<use   name="RecoLocalCalo/EcalRecAlgos"/>
+<use   name="CondFormats/DataRecord"/>
+<use   name="CalibCalorimetry/HcalTPGAlgos"/>
+<use   name="rootcore"/>
+<use   name="boost"/>
+<use   name="CLHEP"/>
+<export>
+  <lib   name="1"/>
+</export>
