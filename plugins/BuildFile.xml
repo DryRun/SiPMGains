@@ -1,10 +1,9 @@
-<library   file="*.cc" name="HcalTupleMaker_Plugins">
+<library   file="*.cc" name="SiPMGains_Plugins">
   <use   name="FWCore/Framework"/>
   <use   name="classlib"/>
   <use   name="FWCore/PluginManager"/>
   <use   name="FWCore/ParameterSet"/>
   <use   name="CommonTools/UtilAlgos"/>
-  <use   name="HCALPFG/HcalTupleMaker"/>
   <use   name="CalibFormats/HcalObjects"/>
   <use   name="CalibCalorimetry/HcalAlgos"/>
   <use   name="DataFormats/Common"/>

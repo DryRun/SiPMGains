@@ -17,30 +17,47 @@ options.register('skipEvents',
                  "Number of events to skip")
 
 options.register('processEvents',
-                 10, #default value
+                 -1, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.int,
                  "Number of events to process")
 
-options.register('inputFiles',
-                 #"file:inputFile.root", #default value
-                 "file:/eos/cms/store/group/dpg_hcal/comm_hcal/USC/run314692/USC_314692.root",
-                 VarParsing.VarParsing.multiplicity.list,
-                 VarParsing.VarParsing.varType.string,
-                 "Input files")
-
+options.register('run', 
+    "308231", 
+    VarParsing.VarParsing.multiplicity.singleton,
+    VarParsing.VarParsing.varType.string,
+    "Run number")
+#options.register('inputFiles',
+#                 #"file:inputFile.root", #default value
+#                 "file:/eos/cms/store/group/dpg_hcal/comm_hcal/USC/run314692/USC_314692.root",
+#                 VarParsing.VarParsing.multiplicity.list,
+#                 VarParsing.VarParsing.varType.string,
+#                 "Input files")
+#
 options.register('outputFile',
-                 "file:test_sipmgains.root", #default value
+                 "", #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "Output file")
+
+options.register('threads',
+                 4, #default value
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.int,
+                 "Number of threads")
 
 options.parseArguments()
 
 print "Skip events =", options.skipEvents
 print "Process events =", options.processEvents
-print "inputFiles =", options.inputFiles
-print "outputFile =", options.outputFile
+print "Run = ", options.run
+inputFile = "file:/eos/cms/store/group/dpg_hcal/comm_hcal/USC/run{}/USC_{}.root".format(options.run, options.run)
+
+if options.outputFile == "":
+    outputFile = "file:sipmgains_{}.root".format(options.run)
+
+#print "inputFiles =", options.inputFiles
+print "outputFile =", outputFile
 
 
 #------------------------------------------------------------------------------------
@@ -54,16 +71,16 @@ process = cms.Process('PFG',eras.Run2_2018)
 #------------------------------------------------------------------------------------
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.processEvents) )
 process.source = cms.Source("HcalTBSource",
-    fileNames  = cms.untracked.vstring(options.inputFiles),
+    fileNames  = cms.untracked.vstring([inputFile]),
     skipEvents = cms.untracked.uint32(options.skipEvents),
 )
 
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string(options.outputFile)
+     fileName = cms.string(outputFile)
 )
 
 process.options = cms.untracked.PSet(
-  numberOfThreads = cms.untracked.uint32(4)
+  numberOfThreads = cms.untracked.uint32(options.threads)
 )
 
 
@@ -80,19 +97,19 @@ process.load("CondCore.CondDB.CondDB_cfi")
 #------------------------------------------------------------------------------------
 # Set up our analyzer
 #------------------------------------------------------------------------------------
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_cfi") # Dont want to use this, load modules individually
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_Tree_cfi")
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_Event_cfi")
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_HBHEDigis_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_cfi") # Dont want to use this, load modules individually
+#process.load("HCALPFG.SiPMGains.SiPMGains_Tree_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_Event_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_HBHEDigis_cfi")
 #process.hcalTupleHBHEDigis.DoEnergyReco = False
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_HODigis_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_HODigis_cfi")
 #process.hcalTupleHODigis.DoEnergyReco = False
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_HFDigis_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_HFDigis_cfi")
 #process.hcalTupleHFDigis.DoEnergyReco = False
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_HcalUnpackerReport_cfi")
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_QIE10Digis_cfi")
-#process.load("HCALPFG.HcalTupleMaker.HcalTupleMaker_QIE11Digis_cfi")
-process.load("HCALPFG.HcalTupleMaker.SiPMGainAnalysis_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_HcalUnpackerReport_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_QIE10Digis_cfi")
+#process.load("HCALPFG.SiPMGains.SiPMGains_QIE11Digis_cfi")
+process.load("HCALPFG.SiPMGains.SiPMGainAnalysis_cfi")
 
 #------------------------------------------------------------------------------------
 # Since this is a local run, make sure we're looking for the FEDs in the right place
